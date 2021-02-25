@@ -1,0 +1,3 @@
+﻿  utf8-test.cpp
+C:\Users\a45s67\source\repos\utf8-test\utf8-test\utf8-test.cpp(13,8): warning C4101: 'error_msg': 未參考的區域變數
+  utf8-test.vcxproj -> C:\Users\a45s67\source\repos\utf8-test\Debug\utf8-test.exe
