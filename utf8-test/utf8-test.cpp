@@ -1,4 +1,4 @@
-// utf8-test.cpp : ¦¹ÀÉ®×¥]§t 'main' ¨ç¦¡¡Cµ{¦¡·|©ó¸Ó³B¶}©l°õ¦æ¤Îµ²§ô°õ¦æ¡C
+// utf8-test.cpp : æ­¤æª”æ¡ˆåŒ…å« 'main' å‡½å¼ã€‚ç¨‹å¼æœƒæ–¼è©²è™•é–‹å§‹åŸ·è¡ŒåŠçµæŸåŸ·è¡Œã€‚
 //
 
 #include <iostream>
@@ -12,20 +12,22 @@ int main()
 	DWORD i;
 	char* error_msg;
 	setlocale(LC_ALL, "zh_CN.UTF-8"); //https://blog.csdn.net/u010003835/article/details/48544747
-									  //§@ªÌ©ó linux¤Uªº½ò¹p("%s"/"%ls"): https://www.itread01.com/content/1546726324.html
+									  //ä½œè€…æ–¼ linuxä¸‹çš„è¸©é›·("%s"/"%ls"): https://www.itread01.com/content/1546726324.html
 	std_out = GetStdHandle(STD_OUTPUT_HANDLE); 
 	//AttachConsole(ATTACH_PARENT_PROCESS);
 
-	wchar_t wbuf[] = L"AAA¤j®a!!!\n";
-	char16_t u16buf[] = u"AAA¤j®a¦n!!!\n";
-	char buf[] = "AAA¤j®a¦n!!!\n";
-	//L,u ³o¨Çprefix ·|±N¬İ¨ìªº¦r¤¸Âà´«¦¨½XÂI https://www.ithome.com.tw/voice/135711
+	wchar_t wbuf[] = L"AAAå¤§å®¶!!!\n";
+	char16_t u16buf[] = u"AAAå¤§å®¶å¥½!!!\n";
+	char buf[] = "AAAå¤§å®¶å¥½!!!\n";
+	// big5: 41 41 41 ,A4 6A, AE 61 ,A6 6E, 21 21 21 
+	// utf8: 41 41 41 ,E5 A4 A7, E5 AE B6, E5 A5 BD, 21 21 21
+	//L,u é€™äº›prefix æœƒå°‡çœ‹åˆ°çš„å­—å…ƒè½‰æ›æˆç¢¼é» https://www.ithome.com.tw/voice/135711
 
-	WriteConsoleW(std_out, wbuf, sizeof(wbuf)/2, &i, NULL); // WriteConsoleW ¥Îªk°Ñ·Ó https://stackoverflow.com/questions/9794764/console-output-with-winapi-writeconsole
+	WriteConsoleW(std_out, wbuf, sizeof(wbuf)/2, &i, NULL); // WriteConsoleW ç”¨æ³•åƒç…§ https://stackoverflow.com/questions/9794764/console-output-with-winapi-writeconsole
 	WriteConsoleW(std_out, u16buf, sizeof(u16buf) / 2, &i, NULL);
-	wcout << wbuf; // ©³¼hcall WideCharToMultiByte http://demon.tw/programming/wprintf-unicode.html
+	wcout << wbuf; // åº•å±¤call WideCharToMultiByte http://demon.tw/programming/wprintf-unicode.html
 	cout << buf;
-	// ­n¦bcmd ¤¤¥¿±`Åã¥Ü¡A°O±o­n§ïcodepage http://fatting10.blogspot.com/2015/08/solved-window.html
+	// è¦åœ¨cmd ä¸­æ­£å¸¸é¡¯ç¤ºï¼Œè¨˜å¾—è¦æ”¹codepage http://fatting10.blogspot.com/2015/08/solved-window.html
 
 
 	// code pages https://docs.microsoft.com/en-us/windows/win32/intl/code-pages
@@ -36,13 +38,13 @@ int main()
 
 }
 
-// °õ¦æµ{¦¡: Ctrl + F5 ©Î [°»¿ù] > [±Ò°Ê¦ı¤£°»¿ù] ¥\¯àªí
-// °»¿ùµ{¦¡: F5 ©Î [°»¿ù] > [±Ò°Ê°»¿ù] ¥\¯àªí
+// åŸ·è¡Œç¨‹å¼: Ctrl + F5 æˆ– [åµéŒ¯] > [å•Ÿå‹•ä½†ä¸åµéŒ¯] åŠŸèƒ½è¡¨
+// åµéŒ¯ç¨‹å¼: F5 æˆ– [åµéŒ¯] > [å•Ÿå‹•åµéŒ¯] åŠŸèƒ½è¡¨
 
-// ¶}©l¨Ï¥Îªº´£¥Ü: 
-//   1. ¨Ï¥Î [¤è®×Á`ºŞ] µøµ¡¡A·s¼W/ºŞ²zÀÉ®×
-//   2. ¨Ï¥Î [Team Explorer] µøµ¡¡A³s½u¨ì­ì©lÀÉ±±¨î
-//   3. ¨Ï¥Î [¿é¥X] µøµ¡¡A°Ñ¾\²Õ«Ø¿é¥X»P¨ä¥L°T®§
-//   4. ¨Ï¥Î [¿ù»~²M³æ] µøµ¡¡AÀËµø¿ù»~
-//   5. «e©¹ [±M®×] > [·s¼W¶µ¥Ø]¡A«Ø¥ß·sªºµ{¦¡½XÀÉ®×¡A©Î¬O«e©¹ [±M®×] > [·s¼W²{¦³¶µ¥Ø]¡A±N²{¦³µ{¦¡½XÀÉ®×·s¼W¦Ü±M®×
-//   6. ¤§«á­n¦A¦¸¶}±Ò¦¹±M®×®É¡A½Ğ«e©¹ [ÀÉ®×] > [¶}±Ò] > [±M®×]¡AµM«á¿ï¨ú .sln ÀÉ®×
+// é–‹å§‹ä½¿ç”¨çš„æç¤º: 
+//   1. ä½¿ç”¨ [æ–¹æ¡ˆç¸½ç®¡] è¦–çª—ï¼Œæ–°å¢/ç®¡ç†æª”æ¡ˆ
+//   2. ä½¿ç”¨ [Team Explorer] è¦–çª—ï¼Œé€£ç·šåˆ°åŸå§‹æª”æ§åˆ¶
+//   3. ä½¿ç”¨ [è¼¸å‡º] è¦–çª—ï¼Œåƒé–±çµ„å»ºè¼¸å‡ºèˆ‡å…¶ä»–è¨Šæ¯
+//   4. ä½¿ç”¨ [éŒ¯èª¤æ¸…å–®] è¦–çª—ï¼Œæª¢è¦–éŒ¯èª¤
+//   5. å‰å¾€ [å°ˆæ¡ˆ] > [æ–°å¢é …ç›®]ï¼Œå»ºç«‹æ–°çš„ç¨‹å¼ç¢¼æª”æ¡ˆï¼Œæˆ–æ˜¯å‰å¾€ [å°ˆæ¡ˆ] > [æ–°å¢ç¾æœ‰é …ç›®]ï¼Œå°‡ç¾æœ‰ç¨‹å¼ç¢¼æª”æ¡ˆæ–°å¢è‡³å°ˆæ¡ˆ
+//   6. ä¹‹å¾Œè¦å†æ¬¡é–‹å•Ÿæ­¤å°ˆæ¡ˆæ™‚ï¼Œè«‹å‰å¾€ [æª”æ¡ˆ] > [é–‹å•Ÿ] > [å°ˆæ¡ˆ]ï¼Œç„¶å¾Œé¸å– .sln æª”æ¡ˆ
